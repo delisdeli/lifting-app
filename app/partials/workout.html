@@ -1,0 +1,25 @@
+<ion-content ng-controller="WorkoutCtrl">
+  <div ng-hide="isExercising" class="card">
+    <label class="item item-input">
+      <input ng-enter="createExercise(newExercise)" ng-model="newExercise" type="text" placeholder="Type exercise here...">
+    </label>
+  </div>
+  <div ng-click="startExercise()" ng-repeat="exercise in exercises" ng-click="startExercise()" class="card">
+    <div class="item item-divider">
+      {{ exercise.name }}
+    </div>
+    <div class="item item-text-wrap">
+      <!-- <label class="checkbox">
+        <input type="checkbox">
+      </label> -->
+    </div>
+  </div>
+  <div class="card bottom-btn-wrapper">
+    <button ng-hide="isExercising" class="button button-block button-positive done-workout">
+      I'm done working out!
+    </button>
+    <button ng-show="isExercising" ng-click="finishExercise()" class="button button-block button-positive done-exercise">
+      Finish Exercise
+    </button>
+  </div>
+</ion-content>
