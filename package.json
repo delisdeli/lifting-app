@@ -46,7 +46,8 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "protractor": "protractor protractor_conf.js"
   },
   "cordovaPlugins": [
     "https://github.com/driftyco/ionic-plugins-keyboard.git",
