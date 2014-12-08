@@ -5,11 +5,14 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 var simpliftApp = angular.module('Simplift', ['ionic',
+  'firebase',
   'config',
   'controllers',
-  'models',
+  // 'models',
   'directives'
 ]);
+
+simpliftApp.constant('FirebaseUrl', 'https://simplift.firebaseio.com');
 
 simpliftApp.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -26,13 +29,14 @@ simpliftApp.run(function($ionicPlatform) {
 });
 
 simpliftApp.config(function($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/workout/1');
 
   $stateProvider.state('workout', {
-    url: '/',
+    url: '/workout/:workoutId',
     views: {
       workout: {
-        templateUrl: 'partials/workout.html'
+        templateUrl: 'partials/workout.html',
+        controller: 'WorkoutCtrl as workoutCtrl'
       }
     }
   });

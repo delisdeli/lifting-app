@@ -1,24 +1,37 @@
-<ion-content ng-controller="WorkoutCtrl">
-  <div ng-hide="isExercising" class="card">
+<ion-content data-ng-init="init()" ng-controller="WorkoutCtrl as workoutCtrl">
+  <div ng-hide="isExercising()" class="card">
     <label class="item item-input">
       <input ng-enter="createExercise(newExercise)" ng-model="newExercise" type="text" placeholder="Type exercise here...">
     </label>
   </div>
-  <div ng-click="startExercise()" ng-repeat="exercise in exercises" ng-click="startExercise()" class="card">
+  <div class="card" ng-click="startExercise()" ng-controller="ExerciseCtrl" ng-repeat="exercise in exercises" data-ng-init="init()">
     <div class="item item-divider">
       {{ exercise.name }}
+      <button class="delete-exercise-btn button-clear icon ion-close" ng-click="deleteExercise(exercise)" stop-event></button>
     </div>
     <div class="item item-text-wrap">
-      <!-- <label class="checkbox">
-        <input type="checkbox">
-      </label> -->
+      <div class="exercise-set" ng-repeat="set in exercise.sets">
+        <button class="button exercise-set-weight">{{ set.weight }}</button>
+        <span>{{ set.reps }}</span>
+      </div>
+      <button class="add-set-button button" ng-click="createSet()" ng-show="isActive()">
+        Tap to add set
+      </button>
+    </div>
+    <div class="manage-reps-wrapper item item-divider" ng-show="isActive()">
+      <button class="decrement-rep-btn button-clear icon ion-minus-circled" ng-click="addReps(-1)"></button>
+      <span class='reps-banner'>{{ numReps + ' reps' }}</span>
+      <button class="increment-rep-btn button-clear icon ion-plus-circled" ng-click="addReps(1)"></button>
+      <div class="range">
+        <input type="range" name="volume" min="1" max="10" ng-model="numReps">
+      </div>
     </div>
   </div>
   <div class="card bottom-btn-wrapper">
-    <button ng-hide="isExercising" class="button button-block button-positive done-workout">
+    <button ng-hide="isExercising()" class="button button-block button-positive done-workout">
       I'm done working out!
     </button>
-    <button ng-show="isExercising" ng-click="finishExercise()" class="button button-block button-positive done-exercise">
+    <button class="button button-block button-positive done-exercise" ng-show="isExercising()" ng-click="finishExercise()">
       Finish Exercise
     </button>
   </div>

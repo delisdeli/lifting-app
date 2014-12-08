@@ -2,8 +2,11 @@
   "name": "Simplift",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "angularfire": "^0.9.0"
+  },
   "devDependencies": {
+    "firebase": "2.0.x",
     "grunt": "~0.4.1",
     "glob": "~4.0.5",
     "grunt-autoprefixer": "~0.4.0",
@@ -39,7 +42,7 @@
     "mkdirp": "~0.5.0",
     "ncp": "~0.6.0",
     "orchestrator": "~0.3.7",
-    "protractor": "~1.0.0",
+    "protractor": "~1.3.0",
     "ripple-emulator": "~0.9.23"
   },
   "engines": {
