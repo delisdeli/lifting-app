@@ -119,6 +119,32 @@ describe('workout view', function() {
           isNotExercising();
         });
       });
+
+      ddescribe('and the hits the add set button', function () {
+        var sets, addedSet;
+
+        beforeEach(function () {
+          sets = element.all(by.repeater('set in sets'));
+          addedSet = sets.first();
+          $('.add-set-btn').click();
+        });
+
+        it('should should add a set of current weight and reps', function () {
+          expect(sets.count()).toEqual(1);
+          expect(addedSet.$('.set-weight').getText()).toEqual('100 LB');
+          expect(addedSet.$('.set-reps').getText()).toEqual('8 reps');
+        });
+
+        describe('and taps on the added set', function () {
+          beforeEach(function () {
+            addedSet.click();
+          });
+
+          it('the set should be deleted', function () {
+            expect(sets.count()).toEqual(0);
+          });
+        });
+      });
     });
   });
 });

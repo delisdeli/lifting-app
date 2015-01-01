@@ -10,11 +10,11 @@
       <button class="delete-exercise-btn button-clear icon ion-close" ng-click="deleteExercise(exercise)" stop-event></button>
     </div>
     <div class="item item-text-wrap">
-      <div class="exercise-set" ng-repeat="set in exercise.sets">
-        <button class="button exercise-set-weight">{{ set.weight }}</button>
-        <span>{{ set.reps }}</span>
+      <div class="exercise-set" ng-click="deleteSet(set)" ng-repeat="set in sets">
+        <div class="set-weight">{{ set.weight + ' LB' }}</div>
+        <span class="set-reps">{{ set.reps + ' reps' }}</span>
       </div>
-      <button class="add-set-button button" ng-click="createSet()" ng-show="isActive()">
+      <button class="add-set-btn button" ng-click="createSet()" ng-show="isActive()">
         Tap to add set
       </button>
     </div>

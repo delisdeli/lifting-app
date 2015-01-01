@@ -119,7 +119,7 @@ describe('Controllers:', function () {
       }));
 
       it('begins a workout without an empty list of exercises', inject(function () {
-        scope.exercise.sets.should.have.length(0);
+        scope.sets.should.have.length(0);
       }));
     });
 
@@ -156,21 +156,6 @@ describe('Controllers:', function () {
       });
     });
 
-    describe('#createSet', function () {
-      beforeEach(function () {
-        scope.init();
-        scope.createSet();
-      });
-
-      it('adds set of current weight and reps to exercise', inject(function () {
-        $timeout.flush();
-        scope.exercise.sets.should.have.length(1);
-        var exercise = scope.exercise.sets[0];
-        exercise.weight.should.equal('100');
-        exercise.reps.should.equal('8');
-      }));
-    });
-
     describe('#isActive', function () {
       describe('when the current exercise is the active exercise', function () {
         it('returns true', inject(function () {
@@ -183,6 +168,61 @@ describe('Controllers:', function () {
         it('returns false', inject(function () {
           scope.workoutCtrl.activeExercise = 1;
           scope.isActive().should.equal(false);
+        }));
+      });
+    });
+
+    describe('#createSet', function () {
+      beforeEach(function () {
+        scope.init();
+        scope.createSet();
+      });
+
+      afterEach(function () {
+        scope.sets.$remove(scope.sets[0]);
+        $timeout.flush();
+      });
+
+      it('adds set of current weight and reps to exercise', inject(function () {
+        $timeout.flush();
+        scope.sets.should.have.length(1);
+        var exercise = scope.sets[0];
+        exercise.weight.should.equal('100');
+        exercise.reps.should.equal('8');
+      }));
+    });
+
+    describe('#deleteSet', function () {
+      beforeEach(function () {
+        scope.init();
+        scope.createSet();
+        $timeout.flush();
+      });
+
+      afterEach(function () {
+        scope.sets.$remove(scope.sets[0]);
+      });
+
+      describe('when exercise is inactive', function () {
+        beforeEach(function () {
+          scope.isActive = function () { return false; };
+          scope.deleteSet(scope.sets[0]);
+        });
+
+        it('does not removes given set', inject(function () {
+          scope.sets.should.have.length(1);
+        }));
+      });
+
+      describe('when exercise is inactive', function () {
+        beforeEach(function () {
+          scope.isActive = function () { return true; };
+          scope.deleteSet(scope.sets[0]);
+          $timeout.flush();
+        });
+
+        it('does not removes given set', inject(function () {
+          scope.sets.should.have.length(0);
         }));
       });
     });

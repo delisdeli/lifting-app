@@ -44,14 +44,12 @@ controllers.controller('ExerciseCtrl', [
   'FirebaseUrl',
   '$firebase',
   function ($scope, FirebaseUrl, $firebase) {
-    var fireRef;
-
     $scope.init = function () {
-      fireRef = new Firebase(FirebaseUrl + '/workouts/' + $scope.workoutCtrl.workoutId + '/exercises/' + $scope.exercise.$id + '/sets');
+      var fireRef = new Firebase(FirebaseUrl + '/workouts/' + $scope.workoutCtrl.workoutId + '/exercises/' + $scope.exercise.$id + '/sets');
 
       $scope.weight = '100';
       $scope.numReps = '8';
-      $scope.exercise.sets = $firebase(fireRef).$asArray();
+      $scope.sets = $firebase(fireRef).$asArray();
     };
 
     $scope.startExercise = function () {
@@ -66,15 +64,21 @@ controllers.controller('ExerciseCtrl', [
       }
     };
 
+    $scope.isActive = function () {
+      return $scope.exercise.$id === $scope.workoutCtrl.activeExercise;
+    };
+
     $scope.createSet = function () {
-      $scope.exercise.sets.$add({
+      $scope.sets.$add({
         weight: $scope.weight,
         reps: $scope.numReps
       });
     };
 
-    $scope.isActive = function () {
-      return $scope.exercise.$id === $scope.workoutCtrl.activeExercise;
+    $scope.deleteSet = function (set) {
+      if ($scope.isActive()) {
+        $scope.sets.$remove(set);
+      }
     };
   }
 ]);
